@@ -1,0 +1,144 @@
+<div class="dashboard-container">
+  
+  <div class="dashboard-header">
+    <div class="user-welcome">
+      <p>Hola, <span class="user-name">{{ dashboardData()?.pacienteNombre || userName() }}</span></p>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div style="text-align: center; padding: 2rem; color: #666;">Cargando tu información...</div>
+  } 
+  
+  @else if (dashboardData(); as data) {
+    <div class="dashboard-grid">
+
+      <div class="card hero-card span-full">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h2>Mi Embarazo</h2>
+            <div class="hero-details">
+              <span class="badge-blue">{{ data.embarazo.trimestre }}</span>
+              <p class="days-left">Faltan <strong>{{ data.embarazo.diasFaltantes }} días</strong> para el parto.</p>
+            </div>
+          </div>
+          
+          <div class="progress-circle-container">
+            <div class="progress-circle" [style.--percentage]="data.embarazo.porcentajeProgreso + '%'">
+              <div class="inner-circle">
+                <span class="label">Semana</span>
+                <span class="number">{{ data.embarazo.semanas }}</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="hero-image">
+            <div class="date-box">
+              <i class="bi bi-calendar-heart date-icon"></i>
+              <div>
+                <span class="date-label">Fecha Probable</span>
+                <span class="date-value">{{ data.embarazo.fechaProbableParto | date:'dd MMM yyyy' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card standard-card">
+        <div class="card-header">
+          <h3><i class="bi bi-calendar-event"></i> Próxima Cita</h3>
+        </div>
+        <div class="card-body centered">
+          @if (data.proximaCita) {
+            <h2 class="big-date">{{ data.proximaCita.fecha | date:'EEEE, d MMM' }}</h2>
+            <p class="time">{{ data.proximaCita.hora }}</p>
+            <p class="subtitle">{{ data.proximaCita.doctorNombre }} ({{ data.proximaCita.especialidad }})</p>
+            <a [routerLink]="['/patient/mis-citas']" class="btn-outline">Ver citas</a>
+          } @else {
+            <p class="subtitle" style="margin-top: 20px;">No tienes citas pendientes.</p>
+            <a [routerLink]="['/patient/mis-citas']" class="btn-outline">Agendar Cita</a>
+          }
+        </div>
+      </div>
+  
+      <div class="card standard-card">
+        <div class="card-header">
+          <h3><i class="bi bi-person-badge"></i> Mi Obstetra</h3>
+        </div>
+        <div class="card-body">
+          @if (data.obstetra) {
+            <div class="doctor-profile">
+              <div class="avatar-circle">
+                @if (data.obstetra.fotoUrl) {
+                   <img [src]="data.obstetra.fotoUrl" style="width:100%; height:100%; border-radius:50%; object-fit: cover;">
+                } @else {
+                   <i class="bi bi-person-fill-add"></i>
+                }
+              </div>
+              <div>
+                <p class="doc-name">{{ data.obstetra.nombre }}</p>
+                <p class="doc-spec">{{ data.obstetra.especialidad }}</p>
+              </div>
+            </div>
+            <div class="action-buttons">
+  
+              <a [href]="'tel:' + data.obstetra.telefono" class="btn-action blue">
+                <i class="bi bi-telephone-fill"></i>
+                <span>Llamar</span>
+              </a>
+
+              <a [href]="'https://wa.me/' + data.obstetra.whatsapp" target="_blank" class="btn-action green">
+                <i class="bi bi-whatsapp"></i>
+                <span>WhatsApp</span>
+              </a>
+
+            </div>
+          } @else {
+            <div class="centered" style="padding: 20px 0;">
+                <p class="subtitle">Aún no tienes un obstetra asignado.</p>
+            </div>
+          }
+        </div>
+      </div>
+  
+      <div class="card standard-card">
+        <div class="card-header">
+          <h3><i class="bi bi-file-earmark-medical"></i> Últimos Resultados</h3>
+        </div>
+        <div class="list-container">
+          @for (resultado of data.ultimosResultados; track $index) {
+            <div class="list-item">
+              <i class="bi bi-file-earmark-pdf-fill item-icon red"></i>
+              <div class="item-info">
+                <span class="item-title">{{ resultado.nombre }}</span>
+                <span class="item-date">{{ resultado.fecha | date:'d MMM yyyy' }}</span>
+              </div>
+              <a [href]="resultado.archivoUrl" target="_blank" class="btn-icon-download">
+                <i class="bi bi-download"></i>
+              </a>
+            </div>
+          } @empty {
+            <p class="subtitle" style="text-align: center;">No hay resultados recientes.</p>
+          }
+        </div>
+      </div>
+  
+      <div class="card standard-card">
+        <div class="card-header">
+          <h3><i class="bi bi-capsule"></i> Indicaciones</h3>
+        </div>
+        <div class="pills-list">
+          @for (indicacion of data.indicaciones; track $index) {
+            <div class="pill-item">
+              <span class="check-icon"><i class="bi bi-check-circle-fill"></i></span>
+              <span>{{ indicacion.medicamento }}</span>
+            </div>
+          } @empty {
+             <p class="subtitle" style="text-align: center;">Sin indicaciones activas.</p>
+          }
+        </div>
+      </div>
+  
+    </div>
+  }
+</div>

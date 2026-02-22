@@ -1,0 +1,349 @@
+:host {
+  --sigma-blue: #0066cc;
+  --text-dark: #1e293b;
+  --text-gray: #64748b;
+  --bg-page: #f1f5f9;
+  --bg-panel-right: #f8fafc; /* Un gris apenas perceptible para el lado derecho */
+  --border-color: #e2e8f0;
+}
+
+.citas-container {
+  
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-section {
+  margin-bottom: 0.5rem;
+  h1 { color: var(--sigma-blue); font-weight: 800; margin-bottom: 5px; }
+  p { color: var(--text-gray); }
+}
+
+/* --- TARJETA UNIFICADA (MAIN CARD) --- */
+.main-card {
+  background: #fff;
+  border-radius: 24px; 
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); 
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  overflow: hidden; 
+  border: 1px solid white; 
+}
+
+/* --- PANELES --- */
+.form-panel {
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.list-panel {
+  padding: 2rem;
+  background-color: var(--bg-panel-right); /* Diferencia sutil de fondo */
+  border-left: 1px solid var(--border-color); /* Línea divisoria vertical */
+}
+
+.panel-header {
+  margin-bottom: 2rem;
+  h3 { 
+    font-size: 1.2rem; font-weight: 700; color: var(--text-dark); 
+    display: flex; align-items: center; gap: 10px;
+    i { color: var(--sigma-blue); }
+  }
+  p { font-size: 0.9rem; color: var(--text-gray); margin-top: 5px; }
+}
+
+/* --- FORMULARIO ESTILIZADO --- */
+.form-group { margin-bottom: 1rem; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; }
+
+.input-group {
+  position: relative;
+  display: flex; align-items: center;
+  
+  .input-icon {
+    position: absolute; left: 15px; color: var(--text-gray); font-size: 1.1rem;
+    pointer-events: none;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 12px 15px 12px 45px; /* Espacio para icono */
+    border: 1px solid var(--border-color);
+    border-radius: 12px; /* Bordes curvos */
+    background: #fff;
+    font-size: 0.95rem;
+    color: black;
+    transition: all 0.2s;
+    
+    &:focus {
+      border-color: var(--sigma-blue);
+      box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1); /* Anillo azul al escribir */
+      outline: none;
+    }
+  }
+  
+}
+
+// Textarea personalizado
+.custom-textarea {
+  width: 100%;
+  height: 54px;       
+  padding: 15px;        
+  
+ 
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: #fff;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  font-family: inherit; 
+  
+ 
+  resize: none;         
+  outline: none;        
+  box-sizing: border-box; 
+  
+  transition: all 0.2s ease;
+
+  
+  &:focus {
+    border-color: var(--sigma-blue);
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+  }
+
+ 
+  &::placeholder {
+    color: #94a3b8;
+  }
+}
+
+.btn-submit {
+  width: 100%; padding: 14px;
+  background: var(--sigma-blue); color: white;
+  border: none; border-radius: 12px;
+  font-weight: 700; font-size: 1rem;
+  cursor: pointer; margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3); /* Sombra azul brillante */
+  transition: transform 0.2s;
+  
+  &:hover { transform: translateY(-2px); background: #0052a3; }
+}
+
+/* --- LISTADO TIPO "TICKET" --- */
+.scrollable-list {
+  max-height: 500px; overflow-y: auto; padding-right: 10px;
+}
+
+.ticket-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 1.2rem;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+  
+  &:hover {
+    border-color: var(--sigma-blue);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transform: translateX(5px);
+  }
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  animation: fadeIn 0.3s ease;
+  
+  &.success {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+  
+  &.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+}/* Error de texto pequeño */
+.error-text {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* --- ESTILOS DEL MODAL PERSONALIZADO --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; /* Por encima de todo */
+  backdrop-filter: blur(3px); /* Efecto borroso de fondo */
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  transform: translateY(0);
+  animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote */
+  
+  .modal-icon {
+    font-size: 3rem;
+    color: #f59e0b; /* Amarillo alerta */
+    margin-bottom: 1rem;
+  }
+
+  h3 { color: var(--text-dark); margin-bottom: 0.5rem; font-size: 1.3rem;}
+  p { color: var(--text-gray); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.5; }
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  
+  .btn-modal {
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+    
+    &:hover { transform: translateY(-2px); }
+    
+    &.cancel {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+    
+    &.confirm {
+      background: #ef4444; /* Rojo */
+      color: white;
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+    }
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+
+/* Clase extra para estado cancelado */
+.status-pill.cancel { background: #fee2e2; color: #991b1b; }
+
+.date-box {
+  background: #eff6ff; 
+  color: var(--sigma-blue);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  display: flex; flex-direction: column;
+  min-width: 60px;
+  
+  .day { font-size: 1.5rem; font-weight: 800; line-height: 1; }
+  .month { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+}
+
+.ticket-info {
+  flex: 1;
+  h4 { margin: 0 0 4px 0; font-size: 1rem; color: var(--text-dark); }
+  .doc { font-size: 0.85rem; color: var(--text-gray); display: block; margin-bottom: 8px; }
+  
+  .meta {
+    display: flex; align-items: center; gap: 15px;
+    .time { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); i { color: var(--sigma-blue);} }
+  }
+}
+
+.status-pill {
+  font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; font-weight: 700; text-transform: uppercase;
+  &.prog { background: #e0f2fe; color: #0284c7; }
+  &.real { background: #dcfce7; color: #166534; }
+}
+
+.btn-icon-delete {
+  background: none; border: none; color: #cbd5e1; cursor: pointer; font-size: 1.2rem;
+  &:hover { color: #ef4444; }
+}
+
+.empty-state {
+  text-align: center; padding: 3rem; color: #94a3b8;
+  i { font-size: 3rem; display: block; margin-bottom: 1rem; }
+}
+/* --- GRILLA DE HORARIOS --- */
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 botones por fila */
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.slot-item {
+  background-color: var(--bg-gray); /* Gris suave por defecto */
+  border: 1px solid var(--border-color);
+  color: var(--text-dark);
+  padding: 10px 5px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+
+  &:hover {
+    background-color: #e2e8f0; /* Un gris un poco más oscuro al pasar mouse */
+    transform: translateY(-1px);
+  }
+
+  /* ESTADO SELECCIONADO (Azul Sigma) */
+  &.active {
+    background-color: var(--sigma-blue);
+    color: white;
+    border-color: var(--sigma-blue);
+    box-shadow: 0 4px 10px rgba(0, 102, 204, 0.3);
+  }
+}
+
+.error-text-small {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+/* Ajuste para móviles: que sean 3 por fila en lugar de 4 */
+@media (max-width: 500px) {
+  .slots-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .main-card { grid-template-columns: 1fr; } /* Una sola columna en móvil */
+  .list-panel { border-left: none; border-top: 1px solid var(--border-color); }
+}

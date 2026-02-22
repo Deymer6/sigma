@@ -1,0 +1,148 @@
+@if (data(); as info) {
+  
+  <div class="atencion-container">
+    
+    <aside class="patient-card">
+      <div class="avatar-section">
+        <div class="avatar-circle">
+          <i class="bi bi-person-fill"></i>
+        </div>
+        <h2>{{ info.pacienteNombre }}</h2>
+        <p class="age">{{ info.edad }} años</p>
+      </div>
+
+      <div class="info-list">
+        <div class="info-item">
+          <i class="bi bi-balloon-heart-fill pink"></i>
+          <span>{{ info.semanasEmbarazo }}</span>
+        </div>
+        <div class="info-item">
+          <i class="bi bi-droplet-fill red"></i>
+          <span>Sangre {{ info.tipoSangre }}</span>
+        </div>
+        <div class="info-item">
+          <i class="bi bi-slash-circle-fill gray"></i>
+          <span>Alergias: {{ info.alergias }}</span>
+        </div>
+      </div>
+
+      <div class="history-section">
+        <h3>Últimas visitas</h3>
+        
+        @for (visita of info.ultimasConsultas; track $index) {
+          <div class="history-item">
+            <i class="bi bi-calendar-event"></i>
+            <span>{{ visita }}</span>
+          </div>
+        } @empty {
+          <p class="text-muted small">No hay visitas recientes.</p>
+        }
+
+      </div>
+    </aside>
+
+    <main class="consultation-card">
+      <div class="header">
+        <h1>Atendiendo Cita - {{ info.horaCita }}</h1>
+      </div>
+
+      <form [formGroup]="consultaForm">
+        
+        <div class="form-section">
+          <label>Diagnóstico Médico</label>
+          <textarea 
+            formControlName="diagnostico" 
+            placeholder="Escriba el diagnóstico detallado aquí..."
+            rows="4"></textarea>
+            
+            @if (consultaForm.get('diagnostico')?.invalid && consultaForm.get('diagnostico')?.touched) {
+              <small class="error-text">El diagnóstico es obligatorio.</small>
+            }
+        </div>
+
+        <div class="form-section">
+          <label>Tratamiento / Receta</label>
+          
+          <div class="medicine-inputs" [formGroup]="medicamentoForm">
+            <input type="text" formControlName="nombre" placeholder="Medicamento (Ej. Paracetamol)">
+            <input type="text" formControlName="indicaciones" placeholder="Indicaciones (Ej. Cada 8 horas)">
+            
+            <button type="button" class="btn-add" (click)="agregarMedicamento()">
+              <i class="bi bi-plus-lg"></i> Agregar
+            </button>
+          </div>
+
+          @if (listaMedicamentos.length > 0) {
+            <div class="medicine-list">
+              
+              @for (med of listaMedicamentos; track $index) {
+                <div class="med-item">
+                  <div class="med-info">
+                    <strong>{{ med.nombre }}</strong>
+                    <span>{{ med.indicaciones }}</span>
+                  </div>
+                  <button type="button" class="btn-remove" (click)="eliminarMedicamento($index)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              }
+
+            </div>
+          } @else {
+            <div class="empty-meds">
+              <i class="bi bi-capsule"></i> No se han agregado medicamentos aún.
+            </div>
+          }
+        </div>
+
+        <div class="form-section">
+          <label>Adjuntar Resultados (Opcional)</label>
+          
+          <div style="margin-bottom: 10px;">
+            <input 
+              type="text" 
+              formControlName="nombreArchivo" 
+              placeholder="Nombre del documento (Ej: Ecografía, Hemograma...)"
+            >
+          </div>
+
+          <input 
+            type="file" 
+            #fileInput 
+            (change)="onFileSelected($event)" 
+            style="display: none"
+            accept=".pdf,.jpg,.png"
+          >
+
+          <div class="upload-box" 
+               [class.has-file]="archivoSeleccionado"
+               (click)="fileInput.click()">
+            
+            <i class="bi" [class]="archivoSeleccionado ? 'bi-file-earmark-check-fill' : 'bi-cloud-arrow-up-fill'"></i>
+            
+            <div class="upload-text">
+              <p>{{ archivoSeleccionado ? archivoSeleccionado.name : 'Clic para subir archivo' }}</p>
+              <small *ngIf="!archivoSeleccionado">Soporta PDF, JPG, PNG (Máx 5MB)</small>
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+
+      <div class="actions-footer">
+        <button class="btn-cancel" (click)="cancelar()">Cancelar</button>
+        <button class="btn-finish" (click)="finalizarConsulta()">
+          <i class="bi bi-check2"></i> Finalizar Consulta
+        </button>
+      </div>
+
+    </main>
+  </div>
+
+} @else {
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <p>Cargando historia clínica...</p>
+  </div>
+}

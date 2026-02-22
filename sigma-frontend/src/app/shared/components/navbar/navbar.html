@@ -1,0 +1,22 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    
+    <a class="navbar-brand" [routerLink]="['/']">
+      <img src="sigma.png" alt="Logo Sigma" class="brand-logo">
+      SIGMA
+    </a>
+
+    <ul class="navbar-nav">
+      @if (isLoggedIn()) {
+        } @else {
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Iniciar Sesión</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link special" [routerLink]="['/register']" routerLinkActive="active">Crear Cuenta</a>
+        </li>
+      }
+    </ul>
+    
+  </div> 
+</nav>

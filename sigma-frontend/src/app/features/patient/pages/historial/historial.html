@@ -1,0 +1,66 @@
+<div class="historial-container">
+  <div class="header-section">
+    
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">Cargando historial...</div>
+  } @else {
+    <div class="timeline">
+      
+      @for (item of historiales(); track item.idHistorial) {
+        <div class="timeline-item">
+          
+          <div class="date-marker">
+            <span class="day">{{ item.fechaAtencion | date:'dd' }}</span>
+            <span class="month">{{ item.fechaAtencion | date:'MMM' }}</span>
+          </div>
+
+          <div class="timeline-card">
+            
+            <div class="card-header-simple">
+              <div class="doc-avatar">
+                <i class="bi bi-person-check-fill"></i>
+              </div>
+              <div class="doc-info">
+                <h3>Consulta Médica</h3>
+                <p class="doc-name">{{ item.nombreDoctor || 'Dr. Asignado' }}</p>
+                <p class="doc-spec">{{ item.especialidad }}</p>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <p class="diagnosis-label">Diagnóstico:</p>
+              <p class="diagnosis-text">{{ item.diagnostico }}</p>
+            </div>
+
+            @if (item.prescripciones.length > 0) {
+              <div class="medication-box">
+                @for (med of item.prescripciones; track $index) {
+                  <div class="med-row">
+                    <i class="bi bi-capsule pill-icon"></i>
+                    <span>{{ med }}</span>
+                  </div>
+                }
+              </div>
+            }
+
+            @if (item.archivos && item.archivos.length > 0) {
+              <div class="files-section">
+                @for (file of item.archivos; track $index) {
+                  <a [href]="file.url" target="_blank" class="file-chip">
+                    <i class="bi bi-paperclip"></i> {{ file.nombre }}
+                  </a>
+                }
+              </div>
+            }
+
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state"><p>Sin historial registrado.</p></div>
+      }
+
+    </div>
+  }
+</div>

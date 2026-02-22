@@ -1,0 +1,71 @@
+/* =========================================
+   1. IMPORTACIÓN DE FUENTES
+   ========================================= */
+/* Solo dejamos activa INTER (la mejor para Dashboards y Apps) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* =========================================
+   2. VARIABLES GLOBALES (Design Tokens)
+   ========================================= */
+:root {
+  /* --- COLORES DE MARCA --- */
+  --color-primario:      #1b78d4; /* Azul vibrante */
+  --color-primario-dark: #0052a3; /* Para hover y estados activos */
+  --color-secundario:    #64748b; /* Gris azulado (texto secundario, iconos inactivos) */
+  
+  /* --- COLORES NEUTROS Y TEXTO --- */
+  --color-texto:         #1e293b; /* Gris oscuro para lectura principal */
+  --color-texto-suave:   #94a3b8; /* Para placeholders o texto deshabilitado */
+  
+  /* --- FONDOS --- */
+  --color-fondo-app:     #f1f5f9; /* El fondo grisaceo de toda la pantalla */
+  --color-blanco:        #ffffff; /* Para las tarjetas (cards) */
+  
+  /* --- UI / BORDES / ESTADOS --- */
+  --color-borde:         #e2e8f0; /* Bordes suaves */
+  --color-borde-foco:    #93c5fd; /* Borde al hacer clic en un input */
+  
+  --color-error:         #ef4444;
+  --color-exito:         #22c55e;
+  --color-alerta:        #f59e0b;
+
+  /* --- FOOTER (Opcional) --- */
+  --color-fondo-footer:  #0f172a;
+
+  /* --- SOMBRAS (Elevación) --- */
+  --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --sombra-fuerte: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* --- FUENTES --- */
+  --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* =========================================
+   3. RESET BÁSICO
+   ========================================= */
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  background-color: var(--color-fondo-app); /* Usamos la variable */
+  color: var(--color-texto);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased; /* Hace que la letra se vea nítida */
+}
+
+/* Títulos siempre oscuros y fuertes */
+h1, h2, h3, h4, h5, h6 {
+  color: #0f172a; /* Slate-900 */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs y botones heredan la fuente Inter */
+input, button, textarea, select {
+  font-family: inherit;
+}
+
+
+/* =========================================
+   4. ESTILOS GLOBALES ADICIONALES
+   ========================================= */
+   

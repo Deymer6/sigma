@@ -1,0 +1,120 @@
+<div class="auth-container">
+  
+  <div class="auth-card">
+
+    <div class="overlay-section overlay-rounded-right slide-in-from-right">
+      <h1>¡Bienvenido!</h1>
+      <p>Para mantenerte conectado con nosotros, inicia sesión con tu cuenta personal.</p>
+      <button class="btn-white" routerLink="/login">Iniciar Sesión</button>
+    </div>
+    
+    <div class="form-section">
+      
+      <div class="form-content">
+        <h2>Crear Cuenta</h2>
+        <p class="subtitle">Completa tus datos para registrarte en SIGMA</p>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          
+          <div class="form-group">
+            <label>Email</label>
+            <div class="input-wrapper">
+              <span class="input-icon"><i class="bi bi-envelope-fill"></i></span>
+              <input type="email" formControlName="email" placeholder="tu.email@correo.com">
+            </div>
+            @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+              <div class="error-message">Email inválido o requerido.</div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label>Contraseña</label>
+            <div class="input-wrapper">
+              <span class="input-icon"><i class="bi bi-lock-fill"></i></span>
+              <input 
+                [type]="hidePassword ? 'password' : 'text'" 
+                formControlName="password"
+                placeholder="••••••••"
+              >
+              @if (registerForm.get('password')?.value) {
+                <button type="button" class="toggle-password" (click)="togglePassword()">
+                  @if (hidePassword) { <i class="bi bi-eye-slash-fill"></i> } @else { <i class="bi bi-eye-fill"></i> }
+                </button>
+              }
+            </div>
+            @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+              <div class="error-message">La contraseña es requerida.</div>
+            }
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nombre</label>
+              <div class="input-wrapper">
+                <span class="input-icon"><i class="bi bi-person-fill"></i></span>
+                <input type="text" formControlName="nombre" placeholder="Tu Nombre">
+              </div>
+              @if (registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched) {
+                 <div class="error-message">Requerido.</div>
+              }
+            </div>
+            
+            <div class="form-group">
+              <label>Apellido</label>
+              <div class="input-wrapper">
+                <span class="input-icon"><i class="bi bi-person-fill"></i></span>
+                <input type="text" formControlName="apellido" placeholder="Tu Apellido">
+              </div>
+              @if (registerForm.get('apellido')?.invalid && registerForm.get('apellido')?.touched) {
+                 <div class="error-message">Requerido.</div>
+              }
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>DNI</label>
+              <div class="input-wrapper">
+                <span class="input-icon"><i class="bi bi-card-heading"></i></span>
+                <input 
+                  type="text" 
+                  formControlName="documentoIdentificacion" 
+                  placeholder="DNI"
+                  maxlength="8"
+                  (keypress)="onlyNumbers($event)"
+                >
+              </div>
+              @if (registerForm.get('documentoIdentificacion')?.invalid && registerForm.get('documentoIdentificacion')?.touched) {
+                <div class="error-message">
+                  @if (registerForm.get('documentoIdentificacion')?.hasError('required')) { <span>Requerido.</span> }
+                  @if (registerForm.get('documentoIdentificacion')?.hasError('minlength')) { <span>8 dígitos exactos.</span> }
+                </div>
+              }
+            </div>
+            
+            <div class="form-group">
+              <label>Fecha Nacimiento</label>
+              <div class="input-wrapper">
+                <span class="input-icon"><i class="bi bi-calendar-date-fill"></i></span>
+                <input type="date" formControlName="fechaNacimiento">
+              </div>
+              @if (registerForm.get('fechaNacimiento')?.invalid && registerForm.get('fechaNacimiento')?.touched) {
+                 <div class="error-message">Requerido.</div>
+              }
+            </div>
+          </div>
+
+          @if (errorMessage) {
+            <div class="backend-error-alert">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              {{ errorMessage }}
+            </div>
+          }
+
+          <button type="submit" [disabled]="registerForm.invalid">Registrarme</button>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+</div>

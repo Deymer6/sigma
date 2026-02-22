@@ -1,0 +1,62 @@
+<div class="history-container">
+  
+  <div class="page-header">
+    <a routerLink="/doctor/mis-pacientes" class="btn-back">
+      <i class="bi bi-arrow-left"></i> Volver al Directorio
+    </a>
+    <div class="title-group">
+      <h1>Historial Médico</h1>
+      <span class="patient-name">{{ pacienteNombre() }}</span>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando expediente...</p>
+    </div>
+  } @else {
+    
+    <div class="timeline">
+      
+      @for (item of historial(); track $index) {
+        <div class="timeline-item">
+          
+          <div class="timeline-date">
+            <span>{{ item.fecha | date:'d MMM y' }}</span>
+            <small>{{ item.fecha | date:'shortTime' }}</small>
+          </div>
+
+          <div class="timeline-marker"></div>
+
+          <div class="timeline-content">
+            <div class="card-header">
+              <h3>{{ item.motivo }}</h3>
+              <span class="doctor-badge">
+                <i class="bi bi-person-medical"></i> Dr. {{ item.doctor }}
+              </span>
+            </div>
+            
+            <div class="diagnosis-box">
+              <strong>Diagnóstico:</strong>
+              <p>{{ item.diagnostico }}</p>
+            </div>
+            
+            @if (item.archivosUrl) {
+              <a [href]="item.archivosUrl" target="_blank" class="file-link">
+                <i class="bi bi-file-earmark-pdf-fill"></i> Ver Resultados Adjuntos
+              </a>
+            }
+          </div>
+
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <i class="bi bi-folder2-open"></i>
+          <p>El paciente aún no tiene historial registrado.</p>
+        </div>
+      }
+
+    </div>
+  }
+</div>

@@ -1,0 +1,74 @@
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  input[type="text"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="number"],
+  textarea,
+  input[disabled] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    box-sizing: border-box; 
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: var(--color-blanco);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primario);
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    }
+    
+    &:disabled {
+      background-color: var(--color-fondo-claro);
+      cursor: not-allowed;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+}
+
+/* --- Botones --- */
+.btn {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary {
+  background-color: var(--color-primario);
+  color: #fff;
+  &:hover { background-color: #0056b3; }
+  &:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+  }
+}
+
+/* --- Mensajes de Error --- */
+.error-message {
+  color: var(--color-error);
+  font-size: 0.875rem; /* 14px */
+  margin-top: 0.5rem;
+}

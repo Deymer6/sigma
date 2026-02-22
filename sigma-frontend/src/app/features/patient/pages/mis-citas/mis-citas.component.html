@@ -1,0 +1,173 @@
+<div class="citas-container">
+  
+  <div class="header-section">  
+  
+
+  @if (successMessage) {
+    <div class="alert success">
+      <i class="bi bi-check-circle-fill"></i> {{ successMessage }}
+    </div>
+  }
+  @if (errorMessage) {
+    <div class="alert error">
+      <i class="bi bi-exclamation-triangle-fill"></i> {{ errorMessage }}
+    </div>
+  }
+
+  <div class="main-card">
+    
+    <div class="form-panel">
+      <div class="panel-header">
+        <h3><i class="bi bi-calendar-plus-fill"></i> Nueva Cita</h3>
+        <p>Completa los datos para agendar.</p>
+      </div>
+
+      <form [formGroup]="citaForm" (ngSubmit)="agendarCita()">
+        
+        <div class="form-group">
+          <label>Especialista</label>
+          <div class="input-group">
+            <span class="input-icon"><i class="bi bi-person-lines-fill"></i></span>
+            <select formControlName="id_obstetra">
+              <option value="" disabled selected>Seleccionar Obstetra...</option>
+              @for (doc of doctores(); track doc.id) {
+                <option [value]="doc.id">Dr. {{ doc.nombre }} {{ doc.apellido }}</option>
+              }
+            </select>
+          </div>
+          @if (citaForm.get('id_obstetra')?.invalid && citaForm.get('id_obstetra')?.touched) {
+            <small class="error-text">Selecciona un médico.</small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label>Fecha</label>
+          <div class="input-group">
+            <span class="input-icon"><i class="bi bi-calendar-event"></i></span>
+            <input type="date" formControlName="fecha" [min]="minDate">
+          </div>
+          @if (citaForm.get('fecha')?.invalid && citaForm.get('fecha')?.touched) {
+            <small class="error-text">Fecha requerida.</small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label>Horario Disponible</label>
+          
+          <div class="slots-grid">
+            @for (hora of horariosDisponibles; track $index) {
+              <button type="button" 
+                      class="slot-item" 
+                      [class.active]="horarioSeleccionado === hora"
+                      (click)="seleccionarHorario(hora)">
+                {{ hora }}
+              </button>
+            }
+          </div>
+          @if (citaForm.get('hora')?.invalid && citaForm.get('hora')?.touched) {
+            <small class="error-text">Por favor, selecciona una hora.</small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label>Motivo de Consulta</label>
+          
+          <textarea 
+            class="custom-textarea"
+            formControlName="motivo" 
+            placeholder="Ej: Control mensual, dolor de cabeza, consulta general..."
+          ></textarea>
+
+          @if (citaForm.get('motivo')?.invalid && citaForm.get('motivo')?.touched) {
+            <small class="error-text">Ingresa un motivo (mínimo 5 letras).</small>
+          }
+        </div>
+
+        <button type="submit" class="btn-submit" 
+          [disabled]="citaForm.invalid || cantidadCitasActivas() >= 2">
+          Agendar Cita
+        </button>
+
+        @if (cantidadCitasActivas() >= 2) {
+          <small style="color: #ef4444; display: block; margin-top: 10px; text-align: center;">
+            Has alcanzado el límite de citas activas (2).
+          </small>
+        }
+    
+      </form>
+    </div>
+
+    <div class="list-panel">
+      <div class="panel-header">
+        <h3><i class="bi bi-list-check"></i> Próximas Atenciones</h3>
+      </div>
+
+      <div class="scrollable-list">
+        
+        @if (loading()) {
+          <div style="text-align:center; padding: 20px; color:#888">
+            <div class="spinner"></div> Cargando citas...
+          </div>
+        }
+
+        @for (cita of citas(); track cita.idCita) {
+          <div class="ticket-card">
+            <div class="date-box">
+              <span class="day">{{ cita.fechaCita | date:'dd' }}</span>
+              <span class="month">{{ cita.fechaCita | date:'MMM' }}</span>
+            </div>
+            
+            <div class="ticket-info">
+              <h4>{{ cita.motivoConsulta }}</h4>
+              <span class="doc"><i class="bi bi-person-circle"></i> {{ cita.obstetraNombre }}</span>
+              
+              <div class="meta">
+                <span class="time">
+                  <i class="bi bi-clock-fill"></i> {{ cita.fechaCita | date:'shortTime' }}
+                </span>
+                
+                <span class="status-pill" 
+                  [class.prog]="cita.estadoCita === 'Programada'"
+                  [class.cancel]="cita.estadoCita === 'Cancelada'"
+                  [class.real]="cita.estadoCita === 'Realizada'">
+                  {{ cita.estadoCita }}
+                </span>
+              </div>
+            </div>
+
+            @if (cita.estadoCita === 'Programada') {
+              <button class="btn-icon-delete" title="Cancelar Cita" (click)="abrirModalCancelar(cita.idCita)">
+                <i class="bi bi-trash"></i>
+              </button>
+            }
+          </div>
+        } @empty {
+          @if (!loading()) {
+            <div class="empty-state">
+              <i class="bi bi-calendar-x"></i>
+              <p>No tienes citas programadas.</p>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+  </div>
+</div>
+
+@if (showModal()) {
+  <div class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-icon">
+        <i class="bi bi-exclamation-circle"></i>
+      </div>
+      <h3>¿Cancelar Cita?</h3>
+      <p>Esta acción cancelará la cita seleccionada y no podrá deshacerse.</p>
+      
+      <div class="modal-actions">
+        <button class="btn-modal cancel" (click)="cerrarModal()">Volver</button>
+        <button class="btn-modal confirm" (click)="confirmarCancelacion()">Sí, Cancelar</button>
+      </div>
+    </div>
+  </div>
+}

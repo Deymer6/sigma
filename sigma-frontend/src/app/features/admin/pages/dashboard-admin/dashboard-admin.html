@@ -1,0 +1,125 @@
+<div class="dashboard-container">
+  
+  <div class="header-intro">
+    
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando estadísticas...</p>
+    </div>
+  } @else if (data(); as info) {
+
+    <div class="kpi-grid">
+      
+      <div class="kpi-card blue-gradient">
+        <div class="kpi-content">
+          <span class="value">{{ info.totalObstetras }}</span>
+          <span class="label">Total Obstetras</span>
+          <span class="subtext">Personal activo</span>
+        </div>
+        <div class="icon-box">
+          <fa-icon [icon]="faUserDoctor" size="2x"></fa-icon>
+        </div>
+      </div>
+
+      <div class="kpi-card green-gradient">
+        <div class="kpi-content">
+          <span class="value">{{ info.totalPacientes }}</span>
+          <span class="label">Pacientes Totales</span>
+          <span class="subtext">Registrados en el sistema</span>
+        </div>
+        <div class="icon-box">
+          <fa-icon [icon]="faUsers" size="2x"></fa-icon>
+        </div>
+      </div>
+
+      <div class="kpi-card purple-gradient">
+        <div class="kpi-content">
+          <span class="value">{{ info.citasEsteMes }}</span>
+          <span class="label">Citas este Mes</span>
+          <span class="subtext">Consultas realizadas</span>
+        </div>
+        <div class="icon-box">
+          <fa-icon [icon]="faCalendarCheck" size="2x"></fa-icon>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="charts-grid">
+      
+      <div class="chart-card">
+        <div class="card-header">
+          <div class="header-title">
+            <fa-icon [icon]="faChartLine" class="header-icon"></fa-icon>
+            <h3>Citas por Mes</h3>
+          </div>
+          <span class="badge">Año 2025</span>
+        </div>
+        
+        <div class="chart-body">
+          
+          <div class="y-axis">
+            <span>400</span>
+            <span>300</span>
+            <span>200</span>
+            <span>100</span>
+            <span>0</span>
+          </div>
+
+          <div class="bars-area">
+            <div class="bars-container">
+              @for (item of chartData(); track item.mes) {
+                <div class="bar-group">
+                  <span class="bar-value">{{ item.valor }}</span>
+                  
+                  <div class="bar" [style.height.px]="item.valor * 0.6">
+                    <span class="tooltip">{{ item.valor }} Citas</span>
+                  </div>
+                  
+                  <span class="month-label">{{ item.mes }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <div class="card-header">
+          <h3><fa-icon [icon]="faClipboardList" class="header-icon"></fa-icon> Actividad Reciente</h3>
+        </div>
+        
+        <div class="activity-list">
+          @for (act of info.actividadReciente; track $index) {
+            @let type = getTypeOfActivity(act);
+            
+            <div class="activity-item" [ngClass]="type">
+              
+              <div class="act-icon-box">
+                @if (type === 'cita') {
+                  <fa-icon [icon]="faCalendarCheck"></fa-icon>
+                } @else if (type === 'paciente') {
+                  <fa-icon [icon]="faPlusCircle"></fa-icon>
+                } @else {
+                  <fa-icon [icon]="faCog"></fa-icon>
+                }
+              </div>
+
+              <div class="act-content">
+                <p class="act-text">{{ act }}</p>
+                <span class="act-time">Hoy</span>
+              </div>
+            </div>
+          } @empty {
+            <p class="text-muted">No hay actividad reciente.</p>
+          }
+        </div>
+      </div>
+
+    </div>
+  }
+</div>

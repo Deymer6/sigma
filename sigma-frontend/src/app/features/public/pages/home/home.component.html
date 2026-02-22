@@ -1,0 +1,49 @@
+<section class="hero">
+  <div class="hero-container">
+
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Cuidado Integral para <br>
+        <span class="highlight">Tu Embarazo</span>
+      </h1>
+      <p class="hero-subtitle">
+        Conecta con tu obstetra y accede a tu información médica de forma segura, rápida y 100% digital.
+      </p>
+      <div class="hero-actions">
+        <a [routerLink]="['/register']" class="btn btn-primary">Crear mi Cuenta</a>
+        <a [routerLink]="['/login']" class="btn btn-outline">Ya tengo cuenta</a>
+      </div>
+    </div>
+    <div class="hero-image-container">
+      <img src="/assets/images/home/doctora-hero.png" alt="Doctora SIGMA" class="hero-img">
+    </div>
+  </div>
+</section>
+<section class="features">
+  <div class="features-container">
+    <div class="features-grid">
+       
+       <div class="feature-card">
+         <div class="feature-icon blue-icon">
+            <fa-icon [icon]="faCalendarDays"></fa-icon>
+         </div>
+         <h3 class="feature-title">Agenda tus Citas</h3>
+       </div>
+ 
+       <div class="feature-card">
+         <div class="feature-icon blue-icon">
+            <fa-icon [icon]="faStethoscope"></fa-icon>
+         </div>
+         <h3 class="feature-title">Historial Clínico</h3>
+       </div>
+ 
+       <div class="feature-card">
+         <div class="feature-icon blue-icon">
+            <fa-icon [icon]="faMicroscope"></fa-icon>
+         </div>
+         <h3 class="feature-title">Resultados de Análisis</h3>
+       </div>
+
+    </div>
+  </div>
+</section>

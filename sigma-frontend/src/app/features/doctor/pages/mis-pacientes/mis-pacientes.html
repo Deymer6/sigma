@@ -1,0 +1,128 @@
+<div class="directory-container">
+  
+  <h1 class="page-title">Directorio de Pacientes</h1>
+
+  <div class="search-bar">
+    <i class="bi bi-search"></i>
+    <input 
+      type="text" 
+      [formControl]="searchControl" 
+      placeholder="Buscar por nombre, apellido o DNI..."
+    >
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Buscando pacientes...</p>
+    </div>
+  } @else {
+    
+    <div class="patient-grid">
+      
+      @for (paciente of pacientes(); track paciente.idPaciente) {
+        
+        <div class="patient-card">
+          
+          <div class="card-header">
+            <div class="avatar-mini">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <h3>{{ paciente.nombreCompleto }}</h3>
+          </div>
+          
+          <div class="card-body">
+            <div class="info-row">
+              <i class="bi bi-card-heading"></i>
+              <span>{{ paciente.dni }}</span>
+            </div>
+            <div class="info-row">
+              <i class="bi bi-clock-history"></i>
+              <span>{{ paciente.ultimaVisita }}</span>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-outline" (click)="verHistorial(paciente.idPaciente)">
+              Ver Historial
+            </button>
+            <button class="btn-primary" (click)="abrirModalCita(paciente)">
+              Nueva Cita
+            </button>
+          </div>
+
+        </div> } @empty {
+        <div class="no-results">
+          <i class="bi bi-people"></i>
+          <p>No se encontraron pacientes con ese criterio.</p>
+        </div>
+      }
+
+    </div>
+  }
+</div>
+
+@if (showModal()) {
+  <div class="modal-overlay" (click)="cerrarModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+          
+          <div class="modal-header">
+              <h3>Agendar Cita</h3>
+              <button class="close-btn" (click)="cerrarModal()">
+                  <i class="bi bi-x-lg"></i>
+              </button>
+          </div>
+  
+          <div class="modal-body">
+              <p style="margin-bottom: 1rem; color: #64748b;">
+                  Paciente: <strong style="color: #0f4c81;">{{ pacienteSeleccionado()?.nombreCompleto }}</strong>
+              </p>
+              
+              <form [formGroup]="citaForm">
+                  
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                      
+                      <div class="form-group">
+                          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Fecha</label>
+                          <input 
+                              type="date" 
+                              formControlName="fecha"
+                              [min]="minDate" 
+                              style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+                      </div>
+
+                      <div class="form-group">
+                          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Hora</label>
+                          <select 
+                              formControlName="hora"
+                              style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background: white;">
+                              <option value="" disabled>Seleccione hora</option>
+                              
+                              @for (hora of horariosLaborales; track hora) {
+                                  <option [value]="hora">{{ hora }}</option>
+                              }
+                          </select>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Motivo</label>
+                      <textarea 
+                          rows="3" 
+                          formControlName="motivo" 
+                          placeholder="Ej: Control mensual..."
+                          style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; resize: none; font-family: inherit;">
+                      </textarea>
+                  </div>
+
+              </form>
+          </div>
+  
+          <div class="modal-footer">
+              <button class="btn-outline" (click)="cerrarModal()">Cancelar</button>
+              <button class="btn-primary" (click)="guardarCita()">Agendar</button>
+          </div>
+  
+      </div>
+  </div>
+}

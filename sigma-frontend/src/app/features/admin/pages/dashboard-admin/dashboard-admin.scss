@@ -1,0 +1,523 @@
+@use "sass:color";
+
+// Variables de color para consistencia
+$primary-blue: #3b82f6;
+$primary-green: #10b981;
+$primary-purple: #8b5cf6;
+$dark-text: #1e293b;
+$muted-text: #64748b;
+
+.dashboard-container {
+  max-width: 1440px;
+  padding: 0.3rem;
+  margin: 0 auto;
+}
+
+/* === KPI CARDS MODERNAS === */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.kpi-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05),
+    0 5px 10px -5px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.5); // Borde sutil
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  // Efecto hover suave
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  .kpi-content {
+    z-index: 2;
+
+    .value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $muted-text;
+      display: block;
+    }
+
+    .subtext {
+      font-size: 0.85rem;
+      color: color.adjust($muted-text, $lightness: 10%);
+      margin-top: 8px;
+      display: block;
+    }
+  }
+
+  .icon-box {
+    z-index: 2;
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  // Gradientes específicos
+  &.blue-gradient {
+    .value {
+      color: $primary-blue;
+    }
+
+    .icon-box {
+      background: linear-gradient(
+        135deg,
+        $primary-blue,
+        color.adjust($primary-blue, $lightness: 15%)
+      );
+    }
+
+    // Decoración de fondo sutil
+    &::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 150px;
+      height: 150px;
+      background: rgba($primary-blue, 0.05);
+      border-radius: 50%;
+      z-index: 1;
+    }
+  }
+
+  &.green-gradient {
+    .value {
+      color: $primary-green;
+    }
+
+    .icon-box {
+      background: linear-gradient(
+        135deg,
+        $primary-green,
+        color.adjust($primary-green, $lightness: 15%)
+      );
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 150px;
+      height: 150px;
+      background: rgba($primary-green, 0.05);
+      border-radius: 50%;
+      z-index: 1;
+    }
+  }
+
+  &.purple-gradient {
+    .value {
+      color: $primary-purple;
+    }
+
+    .icon-box {
+      background: linear-gradient(
+        135deg,
+        $primary-purple,
+        color.adjust($primary-purple, $lightness: 15%)
+      );
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 150px;
+      height: 150px;
+      background: rgba($primary-purple, 0.05);
+      border-radius: 50%;
+      z-index: 1;
+    }
+  }
+}
+
+/* === ESTRUCTURA INFERIOR === */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-card,
+.activity-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: $dark-text;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-icon {
+    color: $primary-blue;
+  }
+
+  .badge {
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $muted-text;
+  }
+}
+
+/* === GRÁFICO MEJORADO === */
+.bar-chart-wrapper {
+  position: relative;
+  height: 280px;
+
+  // Líneas de fondo (grid)
+  .grid-lines {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 0;
+    pointer-events: none;
+
+    .line {
+      width: 100%;
+      height: 1px;
+      background: #f1f5f9;
+
+      &:last-child {
+        background: #e2e8f0;
+      } // Última línea más oscura para el eje X
+    }
+  }
+
+  .bar-chart-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 100%;
+    padding-bottom: 1px; // Para no tapar la línea base
+
+    .bar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+
+      .bar {
+        width: 40px;
+        // Gradiente vertical para las barras
+        background: linear-gradient(
+          to top,
+          $primary-blue,
+          color.adjust($primary-blue, $lightness: 20%)
+        );
+        border-radius: 8px 8px 0 0;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px rgba($primary-blue, 0.2); // Sombra suave
+
+        &:hover {
+          transform: scaleY(1.05); // Efecto de crecimiento al hover
+          background: linear-gradient(
+            to top,
+            color.adjust($primary-blue, $lightness: -5%),
+            $primary-blue
+          );
+
+          .tooltip {
+            opacity: 1;
+            top: -35px;
+            transform: translateX(-50%) scale(1);
+          }
+        }
+
+        .tooltip {
+          position: absolute;
+          top: -25px;
+          left: 50%;
+          transform: translateX(-50%) scale(0.8);
+          background: $dark-text;
+          color: white;
+          padding: 6px 12px;
+          border-radius: 6px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          opacity: 0;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          pointer-events: none;
+          white-space: nowrap;
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px 5px 0;
+            border-style: solid;
+            border-color: $dark-text transparent transparent;
+          }
+        }
+      }
+
+      .month-label {
+        font-size: 0.85rem;
+        color: $muted-text;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+/* === GRÁFICO PROFESIONAL === */
+.chart-body {
+  display: flex;
+  gap: 10px;
+  height: 300px; /* Altura total del área del gráfico */
+  padding-bottom: 10px;
+}
+
+/* EJE Y (Números a la izquierda) */
+.y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye 400...0 de arriba a abajo */
+  padding-bottom: 25px; /* Espacio para alinear el 0 con la línea base */
+
+  span {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-align: right;
+  }
+}
+
+.bars-area {
+  flex: 1;
+  position: relative;
+  border-bottom: 1px solid #cbd5e1;
+
+  background-image: linear-gradient(to bottom, #f1f5f9 1px, transparent 1px);
+  background-size: 100% 25%;
+}
+
+.bars-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 100%;
+  padding-top: 20px;
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+
+  .bar-value {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: -4px;
+  }
+
+  .bar {
+    width: 20px;
+    background: #0f4c81;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      background: #3b82f6;
+
+      .tooltip {
+        opacity: 1;
+        top: -30px;
+      }
+    }
+
+    .tooltip {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+      z-index: 10;
+    }
+  }
+
+  .month-label {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 8px;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .bar {
+    width: 12px !important;
+  }
+
+  .y-axis {
+    display: none;
+  }
+}
+
+/* === ACTIVIDAD RECIENTE DINÁMICA === */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  .activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid #f1f5f9;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .act-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .act-content {
+      .act-text {
+        margin: 0;
+        font-size: 0.95rem;
+        color: $dark-text;
+        line-height: 1.4;
+        font-weight: 500;
+      }
+
+      .act-time {
+        font-size: 0.75rem;
+        color: color.adjust($muted-text, $lightness: 15%);
+        margin-top: 4px;
+        display: block;
+      }
+    }
+
+    &:hover .act-icon-box {
+      transform: scale(1.1);
+    }
+
+    // Estilos específicos según el tipo
+    &.cita {
+      .act-icon-box {
+        background: color.adjust($primary-purple, $lightness: 35%);
+        color: $primary-purple;
+      }
+    }
+
+    &.paciente {
+      .act-icon-box {
+        background: color.adjust($primary-green, $lightness: 35%);
+        color: $primary-green;
+      }
+    }
+
+    &.sistema {
+      .act-icon-box {
+        background: #f1f5f9;
+        color: $muted-text;
+      }
+    }
+  }
+}
+
+/* Loading */
+.loading-state {
+  text-align: center;
+  padding: 6rem;
+  color: $muted-text;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e2e8f0;
+    border-top-color: $primary-blue;
+    border-radius: 50%;
+    animation: spin 1s infinite;
+    margin: 0 auto 15px;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

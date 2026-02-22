@@ -1,0 +1,116 @@
+<button class="mobile-toggle-btn" (click)="toggleMenu()">
+  <fa-icon [icon]="faBars"></fa-icon>
+</button>
+
+@if (isMobileMenuOpen()) {
+  <div class="sidebar-overlay" (click)="closeMenu()"></div>
+}
+
+<div class="sidebar-container" [class.open]="isMobileMenuOpen()">
+  
+  <div class="sidebar-header">
+    <a class="sidebar-brand" (click)="closeMenu()">
+      <img src="assets/images/logo-sigma.png" alt="S" class="brand-logo" onerror="this.style.display='none'">
+      <span class="brand-text">SIGMA</span>
+    </a>
+
+    <button class="close-btn-mobile" (click)="closeMenu()">
+      <fa-icon [icon]="faXmark"></fa-icon>
+    </button>
+  </div>
+
+  <div class="user-profile">
+    <div class="user-avatar">
+      <span>{{ userEmail() ? userEmail()![0].toUpperCase() : 'U' }}</span>
+    </div>
+    <div class="user-info">
+      <span class="user-name">
+        @if(userRole() === 'ROL_ADMINISTRATIVO') { ADMINISTRADOR }
+        @else if(userRole() === 'ROL_OBSTETRA') { BIENVENIDO }
+        @else { BIENVENIDO }
+      </span>
+      <span class="user-email" title="{{ userEmail() }}">{{ userEmail() }}</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+    @if (userRole() === 'ROL_PACIENTE') {
+      <p class="menu-header">Mi Salud</p>
+      <ul>
+        <li>
+          <a [routerLink]="['/patient/dashboard']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faHouse" class="icon"></fa-icon> Dashboard
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/patient/mis-citas']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faCalendarDays" class="icon"></fa-icon> Mis Citas
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/patient/historial']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faClockRotateLeft" class="icon"></fa-icon> Historial
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/patient/mis-resultados']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faFileMedical" class="icon"></fa-icon> Mis Resultados
+          </a>
+        </li>
+      </ul>
+    }
+
+    @if (userRole() === 'ROL_OBSTETRA') {
+      <p class="menu-header">Área Médica</p>
+      <ul>
+        <li>
+          <a [routerLink]="['/doctor/dashboard']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faClipboardList" class="icon"></fa-icon> Agenda del Día
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/doctor/mis-pacientes']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faUsers" class="icon"></fa-icon> Buscar Pacientes
+          </a>
+        </li>
+      </ul>
+    }
+
+    @if (userRole() === 'ROL_ADMINISTRATIVO' || userRole() === 'ADMIN') {
+      
+      <p class="menu-header">PANEL DE CONTROL</p>
+      
+      <ul>
+        <li>
+          <a [routerLink]="['/admin/dashboard']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faChartLine" class="icon"></fa-icon> 
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/admin/gestion-obstetras']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faUserDoctor" class="icon"></fa-icon> 
+            <span>Gestión Obstetras</span>
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/admin/gestion-pacientes']" routerLinkActive="active" (click)="closeMenu()">
+            <fa-icon [icon]="faUsers" class="icon"></fa-icon> 
+            <span>Gestión Pacientes</span>
+          </a>
+        </li>
+      </ul>
+    }
+
+  </nav>
+
+  <div class="sidebar-footer">
+    <a (click)="logout(); closeMenu()">
+      <fa-icon [icon]="faRightFromBracket" class="icon"></fa-icon> Cerrar Sesión
+    </a>
+  </div>
+
+</div>

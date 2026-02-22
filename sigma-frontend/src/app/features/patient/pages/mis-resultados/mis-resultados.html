@@ -1,0 +1,81 @@
+<div class="results-container">
+  
+  <div class="header-section">
+  </div>
+
+  <div class="toolbar">
+    
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input type="text" 
+             placeholder="Buscar resultados..." 
+             [ngModel]="searchTerm()" 
+             (ngModelChange)="searchTerm.set($event)">
+    </div>
+
+    <div class="filter-chips">
+      <button class="chip" 
+              [class.active]="activeFilter() === 'todos'" 
+              (click)="setFilter('todos')">
+        Todos
+      </button>
+      <button class="chip" 
+              [class.active]="activeFilter() === 'eco'" 
+              (click)="setFilter('eco')">
+        Ecografías
+      </button>
+      <button class="chip" 
+              [class.active]="activeFilter() === 'lab'" 
+              (click)="setFilter('lab')">
+        Sangre / Otros
+      </button>
+    </div>
+  </div>
+
+  <div class="results-grid">
+    
+    @if (loading()) {
+      <div class="loading">Cargando resultados...</div>
+    } 
+    @else {
+      @for (item of filteredResultados(); track $index) {
+        
+        <div class="result-card">
+          <div class="file-icon-box" [class.is-pdf]="isPdf(item.archivoAdjuntoUrl)" [class.is-img]="!isPdf(item.archivoAdjuntoUrl)">
+            @if (isPdf(item.archivoAdjuntoUrl)) {
+              <span class="type-text">PDF</span>
+              <i class="bi bi-file-earmark-pdf-fill"></i>
+            } @else {
+              <span class="type-text">IMG</span>
+              <i class="bi bi-file-image-fill"></i>
+            }
+          </div>
+
+          <div class="card-content">
+            <h3>{{ item.tipoAnalisis }}</h3>
+            <span class="date">{{ item.fechaRealizacion | date:'d MMM yyyy' }}</span>
+            <p class="description">{{ item.valoresObservaciones || 'Sin observaciones registradas.' }}</p>
+          </div>
+
+          <div class="card-action">
+            @if (item.archivoAdjuntoUrl) {
+              <a [href]="item.archivoAdjuntoUrl" target="_blank" class="btn-download" title="Descargar">
+                <i class="bi bi-download"></i>
+              </a>
+            } @else {
+              <button class="btn-download disabled" title="No disponible" disabled>
+                <i class="bi bi-slash-circle"></i>
+              </button>
+            }
+          </div>
+        </div>
+
+      } @empty {
+        <div class="empty-state">
+          <i class="bi bi-folder2-open"></i>
+          <p>No se encontraron resultados.</p>
+        </div>
+      }
+    }
+  </div>
+</div>

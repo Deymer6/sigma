@@ -1,0 +1,174 @@
+/* --- CONTENEDOR PRINCIPAL (Fondo gris que centra todo) --- */
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+// Contenedor principal que centra la tarjeta de autenticación
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  padding-top: 1rem;       
+  min-height: 90vh;       
+  background-color: #f0f2f5;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
+}
+
+// --- TARJETA DE AUTENTICACIÓN (Panel blanco con sombra) ---
+.auth-card {
+  background-color: #fff;
+  border-radius: 30px; 
+  overflow: hidden;    
+  width: 1200px;    
+  max-width: 95%;  
+  
+  display: flex;    
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+}
+
+/* =========================================
+   SECCIONES (Paneles Izquierdo y Derecho)
+   ========================================= */
+.overlay-section, .form-section {
+  flex: 1; 
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+// Bordes redondeados en el lado derecho del panel izquierdo
+.overlay-rounded-right {
+  border-top-right-radius: 100px;    
+  border-bottom-right-radius: 100px; 
+}
+
+
+.overlay-section {
+  
+  z-index: 2; 
+}
+// LADO OVERLAY (Izquierda)
+.overlay-section {
+  background: linear-gradient(135deg, #0689fb 0%, #196cd2 100%);
+  color: white;
+  align-items: center;
+  text-align: center;
+}
+// Contenido dentro del lado overlay
+
+.overlay-section h1 { color: white; font-size: 2.5rem; font-weight: 800; }
+.overlay-section p { font-size: 1.1rem; margin-bottom: 2rem; color: rgba(255,255,255,0.9); }
+
+/* LADO FORMULARIO (Derecha) */
+.form-section {
+  background-color: #fff;
+  align-items: center;
+}
+
+
+.form-content {
+  width: 100%;
+  max-width: 450px; 
+}
+
+.form-section h2 { color: #0066cc; font-size: 2rem; font-weight: 800; text-align: center; }
+.subtitle { text-align: center; color: #64748b; margin-bottom: 2rem; }
+
+/* =========================================
+   INPUTS Y BOTONES
+   ========================================= */
+.form-group { margin-bottom: 1.2rem; }
+.form-group label { font-size: 0.9rem; color: #475569; font-weight: 600; margin-bottom: 0.5rem; display: block; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+.input-wrapper { position: relative; display: flex; align-items: center; }
+
+// Iconos dentro de los campos de texto
+.input-icon, .toggle-password {
+  position: absolute;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+.input-icon { left: 15px; pointer-events: none; }
+.toggle-password { right: 15px; background: none; border: none; cursor: pointer; padding: 0; }
+.toggle-password:hover { color: #0066cc; }
+
+// Estilos para los campos de texto
+input {
+  width: 100%;
+  padding: 12px 45px; 
+  background-color: #f1f5f9;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+input:focus { background-color: #fff; border-color: #168af0; box-shadow: 0 0 0 3px rgba(22, 138, 240, 0.15); }
+
+// Estilos para el botón de envío
+button[type="submit"] {
+  background-color: #0066cc; color: #fff; border: none; padding: 14px 40px;
+  border-radius: 50px; font-weight: 700; text-transform: uppercase;
+  margin-top: 1.5rem; cursor: pointer; width: 100%;
+  transition: all 0.3s ease;
+}
+button[type="submit"]:hover:not(:disabled) { background-color: #4997e6; transform: translateY(-2px); }
+button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+
+// Estilos para el botón secundario blanco
+.btn-white {
+  background-color: #ffffff; color: #1773e4; border: none; padding: 12px 40px;
+  border-radius: 50px; font-weight: 800; text-transform: uppercase; cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-white:hover { background-color: #f8fafc; transform: scale(1.05); }
+
+/* =========================================
+   ANIMACIÓN (Derecha a Izquierda) 0.9s
+   ========================================= */
+.overlay-rounded-right {
+  animation: slideInFromRight 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+// Definición de la animación
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* RESPONSIVE MÓVIL */
+@media (max-width: 900px) {
+  .auth-card { flex-direction: column; height: auto; }
+  .form-grid { grid-template-columns: 1fr; }
+  .overlay-section { padding: 2rem; order: -1;  }
+}
+
+
+// color para los mensajes de error
+.backend-error-alert {
+  background-color: #fee2e2; 
+  color: #b91c1c;            
+  border: 1px solid #fca5a5; 
+  
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  
+  
+  animation: shake 0.4s ease-in-out;
+}
+
+// Definición de la animación de sacudida
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}

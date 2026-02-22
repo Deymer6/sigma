@@ -1,0 +1,282 @@
+//  CONTENEDOR PRINCIPAL
+
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+// Contenedor centrado vertical y horizontalmente
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  padding-top: 1rem;       
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
+}
+
+// targeta principal 
+.auth-card {
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  
+  width: 1200px;    
+  max-width: 95%;   
+  min-height: 600px;
+  
+  display: flex;
+  position: relative;
+
+  // Animación de entrada suave (Fade Up) 
+  opacity: 0;
+  transform: translateY(30px);
+  animation: cardEntrance 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes cardEntrance {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   LADO IZQUIERDO: FORMULARIO
+   ========================================= */
+.form-section {
+  flex: 1;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  background-color: #fff;
+}
+
+// Contenedor del formulario con ancho máximo
+.form-content {
+  width: 100%;
+  max-width: 380px; 
+}
+// Títulos
+.form-section h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0066cc; 
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+// subtitulos
+.subtitle {
+  text-align: center;
+  color: #64748b;
+  margin-bottom: 2.5rem;
+  font-size: 0.95rem;
+}
+
+/* =========================================
+   INPUTS CON ICONOS
+   ========================================= */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+// Estilo de las etiquetas
+.form-group label {
+  font-size: 0.9rem;
+  color: #475569;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 600;
+}
+// Contenedor relativo para posicionar iconos
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+// Icono dentro del Input a la izquierda
+.input-icon {
+  position: absolute;
+  left: 15px;
+  color: #94a3b8;
+  font-size: 1.2rem; 
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+// Botón para mostrar/ocultar contraseña
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  font-size: 1.2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+  z-index: 10;
+}
+// efecto hover
+.toggle-password:hover {
+  color: #0066cc;
+}
+
+//
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 14px 45px; 
+  background-color: #f1f5f9;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+input:focus {
+  background-color: #fff;
+  border-color: #168af0;
+  box-shadow: 0 0 0 4px rgba(22, 138, 240, 0.1);
+}
+
+// Alertas de error 
+.error-message {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  margin-left: 5px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   LADO DERECHO: AZUL (OVERLAY)
+   ========================================= */
+.overlay-section {
+  flex: 1;
+  background: linear-gradient(135deg, #168af0 0%, #1773e4 100%);
+  color: white;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+// Texto blanco 
+.overlay-section h1 {
+  color: #ffffff !important;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.overlay-section p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 80%;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Borde curvo izquierdo */
+.overlay-rounded-left {
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+
+ // Animacion de cortina de Derecha a Izqueirda
+.slide-in-right {
+  animation: slideInRight 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.slide-in-left {
+  
+  animation: slideInLeft 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes slideInLeft {
+  from { 
+    transform: translateX(-100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0);     
+    opacity: 1; 
+  }
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+button[type="submit"] {
+  background-color: #0066cc;
+  color: #fff;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 10px 20px rgba(0, 102, 204, 0.2);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #0052a3;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 82, 163, 0.3);
+}
+
+.btn-white {
+  background-color: #ffffff;
+  color: #1773e4;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 50px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+}
+
+.btn-white:hover {
+  background-color: #f8fafc;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================
+   RESPONSIVE (Móvil)
+   ========================================= */
+@media (max-width: 900px) {
+  .auth-card {
+    flex-direction: column-reverse; 
+    width: 95%;
+    height: auto;
+  }
+  .overlay-section {
+    padding: 2rem;
+    border-radius: 0 0 30px 30px; 
+  }
+  .overlay-rounded-left {
+    border-radius: 0 0 30px 30px;
+  }
+  .form-content {
+    max-width: 100%;
+  }
+}

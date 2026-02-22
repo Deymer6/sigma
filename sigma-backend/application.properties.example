@@ -1,0 +1,17 @@
+# Archivo Example - COPIAR ESTE Y CONFIGURAR CREDENCIALES REALES
+
+spring.application.name=sigma-backend
+
+# IMPORTANTE: Reemplaza los valores entre {} con tus credenciales reales
+# Este archivo es solo ejemplo, NUNCA lo subas a Git con credenciales reales
+
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=SIGMA;encrypt=false;trustServerCertificate=true;
+spring.datasource.username=sa
+spring.datasource.password=TU_CONTRASEÑA_REAL_AQUI
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.SQLServerDialect
+
+server.port=8080

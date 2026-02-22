@@ -1,0 +1,280 @@
+/* --- VARIABLES LOCALES --- */
+:host {
+  --primary: #0f4c81;
+  --text-dark: #334155;
+  --text-light: #64748b;
+  --bg-page: #f8fafc;
+  --line-color: #e2e8f0;
+}
+
+.history-container {
+  
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    
+    /* Forma de botón */
+    padding: 10px 24px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0; 
+    border-radius: 50px;  
+    width: fit-content;    
+    align-self: flex-start; 
+    
+    
+    color: #64748b;            
+    text-decoration: none;
+    font-weight: 100;
+    font-size: 0.9rem;
+    
+    /* Sombra y Transición */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    i { 
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+    &:hover {
+      background-color: #f8fafc;
+      color: #0f4c81;          
+      border-color: #cbd5e1;
+      transform: translateX(-2px); 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+      
+      i {
+        transform: translateX(-4px); 
+      }
+    }
+
+    
+    &:active {
+      transform: translateX(-2px) scale(0.98);
+    }
+  }
+}
+
+  .title-group {
+    h1 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin: 0 0 5px 0;
+      font-weight: 800;
+    }
+    .patient-name {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      font-weight: 500;
+      opacity: 0.8;
+    }
+  }
+
+
+
+.timeline {
+  position: relative;
+  padding-left: 10px;
+
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    bottom: 0;
+    left: 140px; 
+    width: 2px;
+    background: var(--line-color);
+  }
+}
+
+.timeline-item {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+
+  /* FECHA (Izquierda) */
+  .timeline-date {
+    width: 110px;
+    text-align: right;
+    padding-top: 5px;
+    
+    span {
+      display: block;
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 1rem;
+    }
+    small {
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+  }
+
+
+  .timeline-marker {
+    position: absolute;
+    left: 135px; 
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #3b82f6; 
+    box-shadow: 0 0 0 4px #eff6ff; 
+    z-index: 2;
+  }
+
+  /* CONTENIDO (Tarjeta Derecha) */
+  .timeline-content {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 0.8rem;
+
+      h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .doctor-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #f0f9ff;
+        color: #0369a1;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        
+        i { font-size: 1rem; }
+      }
+    }
+
+    .diagnosis-box {
+      margin-bottom: 1.2rem;
+      strong {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--text-light);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      p {
+        margin: 0;
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
+    }
+
+   
+
+    .file-link {
+      display: inline-flex; 
+      align-items: center;
+      gap: 10px;
+      margin-top: 1.2rem; 
+      
+      padding: 12px 24px; 
+      background-color: #ffffff;
+      border: 1px solid #bfdbfe; 
+      border-radius: 10px; 
+      
+      color: #0f4c81; 
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03); /* Sombra sutil inicial */
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); /* Animación suave */
+
+      i { 
+        font-size: 1.2rem; 
+        color: #3b82f6; 
+      }
+
+     
+      &:hover {
+        background-color: #f0f9ff;
+        border-color: #3b82f6;     
+        transform: translateY(-3px); 
+        box-shadow: 0 8px 15px rgba(59, 130, 246, 0.15); 
+      }
+      
+      /* Efecto Click */
+      &:active {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+    }
+    
+  }
+}
+
+/* --- ESTADOS VACÍOS / CARGA --- */
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--text-light);
+
+  i { font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.5; }
+  p { font-size: 1.1rem; }
+  
+  .spinner {
+    width: 40px; height: 40px; 
+    border: 4px solid #e2e8f0; border-top-color: var(--primary); 
+    border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;
+  }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .timeline::before { left: 20px; } /* Mover línea a la izq */
+  
+  .timeline-item {
+    flex-direction: column; gap: 1rem;
+    
+    .timeline-date {
+      width: 100%; text-align: left; padding-left: 35px;
+      flex-direction: row; gap: 10px; align-items: baseline;
+    }
+    
+    .timeline-marker { left: 15px; top: 6px; } /* Ajustar bolita */
+    
+    .timeline-content { margin-left: 35px; } /* Ajustar tarjeta */
+  }
+}

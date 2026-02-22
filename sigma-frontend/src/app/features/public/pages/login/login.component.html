@@ -1,0 +1,61 @@
+<div class="auth-container">
+  <div class="auth-card">
+    
+    <div class="form-section">
+      
+      <div class="form-content">
+        <h2>Bienvenido a SIGMA</h2>
+        <p class="subtitle"></p>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          
+          <div class="form-group">
+            <label>Correo Electrónico</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <i class="bi bi-envelope-fill"></i> </span>
+              
+              <input type="email" formControlName="email" placeholder="ejemplo@sigma.com">
+            </div>
+            
+            @if (loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)) {
+               <div class="error-message">Email inválido</div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label>Contraseña</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <i class="bi bi-lock-fill"></i> </span>
+
+              <input 
+                [type]="hidePassword ? 'password' : 'text'" 
+                formControlName="password" 
+                placeholder="••••••••"
+              >
+
+              @if (loginForm.get('password')?.value) {
+                <button type="button" class="toggle-password" (click)="togglePassword()">
+                  @if (hidePassword) {
+                    <i class="bi bi-eye-slash-fill"></i> 
+                  } @else {
+                    <i class="bi bi-eye-fill"></i>
+                  }
+                </button>
+              }
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="loginForm.invalid">Ingresar</button>
+        </form>
+      </div> </div>
+
+    <div class="overlay-section overlay-rounded-left slide-in-left">
+      <h1>¿Nueva en SIGMA?</h1>
+      <p>Crea tu cuenta para gestionar tus controles prenatales y acceder a tu historial médico.</p>
+      <button class="btn-white" routerLink="/register">Crear Cuenta</button>
+    </div>
+
+  </div>
+</div>

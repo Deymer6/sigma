@@ -1,0 +1,132 @@
+<div class="doctor-container">
+  
+  <!-- Estado de Carga -->
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando su agenda...</p>
+    </div>
+  } 
+  @else if (data(); as staff) {
+    <div class="header-section">
+      <div class="welcome-text">
+        <h1>Hola, Dr(a). {{ staff.nombreCompleto }}</h1>
+      </div>
+      <div class="date-picker-wrapper">
+            <div class="icon-calendar">
+            <i class="bi bi-calendar4-week"></i>
+            </div>
+            <input 
+                #datePicker
+                type="date" 
+                [value]="currentDate" 
+                (change)="onDateChange($event)"
+                class="custom-date-input"
+            >
+        </div>
+      
+    </div>
+    <div class="kpi-grid">
+      
+      <div class="kpi-card blue">
+        <div class="icon-box">
+          <i class="bi bi-calendar2-week-fill"></i>
+        </div>
+        <div class="kpi-content">
+          <span class="value">{{ totalCitas() }}</span>
+          <span class="label">Total Citas Hoy</span>
+        </div>
+      </div>
+
+      <div class="kpi-card orange">
+        <div class="icon-box">
+          <i class="bi bi-clock-fill"></i>
+        </div>
+        <div class="kpi-content">
+          <span class="value">{{ citasPendientes() }}</span>
+          <span class="label">Por Atender</span>
+        </div>
+      </div>
+
+      <div class="kpi-card green">
+        <div class="icon-box">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <div class="kpi-content">
+          <span class="value">{{ citasFinalizadas() }}</span>
+          <span class="label">Completadas</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="agenda-card">
+      <div class="card-header">
+        <h3><i class="bi bi-journal-medical"></i> Agenda del Día</h3>
+      </div>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Paciente</th>
+              <th>Motivo de Consulta</th>
+              <th>Estado</th>
+              <th class="text-end">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (cita of staff.citasDeHoy; track cita.idCita) {
+              <tr>
+                <!-- Hora -->
+                <td class="time-cell">
+                  <i class="bi bi-clock"></i> {{ cita.hora }}
+                </td>
+                <td class="patient-cell">
+                  <strong>{{ cita.pacienteNombre }}</strong>
+                </td>
+                <td class="reason-cell">
+                  {{ cita.motivo }}
+                </td>
+                
+                <td>
+                  <span class="status-badge" 
+                    [class.pending]="cita.estado === 'Programada'"
+                    [class.done]="cita.estado === 'Realizada'"
+                    [class.cancel]="cita.estado === 'Cancelada'">
+                    
+                    @if(cita.estado === 'Programada') { En Espera }
+                    @else if(cita.estado === 'Realizada') { Atendido }
+                    @else { Cancelado }
+                  </span>
+                </td>
+                
+                
+                <td class="text-end">
+                  @if (cita.estado === 'Programada') {
+                    <a [routerLink]="['/doctor/atencion', cita.idCita]" class="btn-attend">
+                      Atender
+                    </a>
+                  } 
+                  @else if (cita.estado === 'Realizada') {
+                    <span class="text-muted"><i class="bi bi-check-all"></i> Listo</span>
+                  }
+                  @else {
+                    <span class="text-muted">-</span>
+                  }
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="empty-row">
+                  <i class="bi bi-calendar-x"></i> No tiene citas programadas para hoy.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  }
+</div>

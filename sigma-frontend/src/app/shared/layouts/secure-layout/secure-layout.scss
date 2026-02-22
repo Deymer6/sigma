@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+// Estilos del layout seguro
+.secure-layout-container {
+  display: flex;       
+  height: 100%;
+  width: 100%;
+  position: relative;  
+}
+// Estilos de la barra lateral y el contenido principal
+.layout-sidebar {
+  width: 280px;        
+  flex-shrink: 0;
+  background-color: #ffffff; 
+  border-right: 1px solid #e0e0e0;
+  height: 100%;
+}
+// Estilos del área de contenido principal
+.layout-content {
+  flex-grow: 1;        
+  overflow-y: auto;    
+  padding: 2rem;       
+  background-color: #f0f2f5; 
+  width: 100%;         
+  transition: margin-left 0.3s ease;
+}
+
+// Estilos para pantallas pequeñas (móvil)
+@media (max-width: 900px) {
+  
+  .secure-layout-container {
+    display: block;   
+  }
+
+  .layout-sidebar {
+    
+    width: 0; 
+    border: none;
+  }
+
+  .layout-content {
+    width: 95%;       
+    padding: 1rem;     
+    padding-top: 60px; 
+  }
+}

@@ -1,0 +1,247 @@
+
+:host {
+  --sigma-blue: #0066cc;
+  --sigma-light-blue: #f0f7ff; 
+  --text-dark: #334155;
+  --text-gray: #64748b;
+  --bg-gray: #f8fafc;
+  --white: #ffffff;
+  --border-color: #e2e8f0;
+}
+
+.dashboard-container {
+  padding: 0rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// header 
+.dashboard-header {
+  margin-bottom: 2rem;
+  .user-welcome {
+    p { font-size: 1.5rem; color: var(--text-dark); margin: 0; }
+    .user-name { font-weight: 800; color: var(--sigma-blue); }
+    .date-today { font-size: 0.9rem; color: var(--text-gray); }
+  }
+}
+
+// grid
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.span-full { grid-column: 1 / -1; }
+
+@media (min-width: 1900px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// Targetas generales
+.card {
+  background-color: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+  }
+}
+
+.card-header {
+  margin-bottom: 1rem;
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    i { color: var(--sigma-blue); }
+  }
+}
+
+/* --- HERO CARD (Estilo Azul Suave) --- */
+.hero-card {
+  background: linear-gradient(to right, #ffffff, var(--sigma-light-blue));
+  border: 1px solid #bfdbfe; 
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  
+  /* Diseño responsive para el Hero */
+  .hero-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  h2 { font-size: 1.5rem; color: var(--sigma-blue); font-weight: 800; margin-bottom: 10px; }
+  
+  .badge-blue {
+    background: var(--sigma-blue); color: white; padding: 4px 12px; 
+    border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+  }
+  .days-left { margin-top: 5px; color: var(--text-gray); font-size: 0.9rem; }
+
+  /* Círculo de Progreso */
+  .progress-circle {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: conic-gradient(var(--sigma-blue) var(--percentage), #e2e8f0 var(--percentage));
+    display: flex; align-items: center; justify-content: center;
+    
+    .inner-circle {
+      width: 84px; height: 84px; background: white; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      .label { font-size: 0.7rem; color: var(--text-gray); }
+      .number { font-size: 2rem; font-weight: 800; color: var(--sigma-blue); line-height: 1; }
+    }
+  }
+
+  .date-box {
+    display: flex; align-items: center; gap: 10px;
+    background: white; padding: 10px 15px; border-radius: 12px; border: 1px solid var(--border-color);
+    .date-icon { font-size: 1.5rem; color: var(--sigma-blue); }
+    .date-label { display: block; font-size: 0.75rem; color: var(--text-gray); }
+    .date-value { font-weight: 700; color: var(--text-dark); }
+  }
+}
+
+/* --- 2. TARJETAS ESTÁNDAR --- */
+.centered { text-align: center; display: flex; flex-direction: column; align-items: center; }
+
+.big-date { font-size: 1.4rem; color: var(--sigma-blue); font-weight: 700; margin-bottom: 0.2rem; }
+.time { font-size: 1rem; font-weight: 600; color: var(--text-dark); }
+.subtitle { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 1rem; }
+
+.btn-outline {
+  color: var(--sigma-blue); border: 1px solid var(--sigma-blue);
+  padding: 6px 20px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+  transition: all 0.2s;
+  &:hover { background: var(--sigma-blue); color: white; }
+}
+
+/* Doctor Profile */
+.doctor-profile {
+  display: flex; align-items: center; gap: 15px; margin-bottom: 1rem;
+  .avatar-circle {
+    width: 45px; height: 45px; background: var(--sigma-light-blue); color: var(--sigma-blue);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+  }
+  .doc-name { font-weight: 700; color: var(--text-dark); margin: 0; }
+  .doc-spec { font-size: 0.8rem; color: var(--text-gray); margin: 0; }
+}
+
+.action-buttons {
+  display: flex; gap: 10px;
+  .btn-action {
+    flex: 1; padding: 8px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem;
+    transition: transform 0.2s;
+    &.blue { background: var(--sigma-light-blue); color: var(--sigma-blue); }
+    &.green { background: #dcfce7; color: #166534; }
+    &:hover { transform: translateY(-2px); filter: brightness(0.95); }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+
+
+
+  }
+}
+
+/* Listas */
+.list-container { display: flex; flex-direction: column; gap: 10px; }
+
+.list-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 8px;
+  background: var(--bg-gray);
+  .item-icon { font-size: 1.2rem; &.red { color: #ef4444; } }
+  .item-info { flex: 1; display: flex; flex-direction: column; }
+  .item-title { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
+  .item-date { font-size: 0.75rem; color: var(--text-gray); }
+  .btn-icon-download {
+    background: none; border: none; color: var(--sigma-blue); cursor: pointer; font-size: 1.1rem;
+  }
+}
+
+.pills-list { display: flex; flex-direction: column; gap: 8px; }
+.pill-item {
+  display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text-dark);
+  .check-icon { color: #10b981; }
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  
+  
+  .dashboard-container {
+    padding: 1rem;
+
+    width: 100%;      
+    box-sizing: border-box; 
+    overflow-x: hidden; 
+  }
+
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr; 
+    gap: 1rem;
+  }
+
+  
+  .hero-card {
+    
+    flex-direction: column; 
+    height: auto;      
+    padding: 1.5rem;   
+    
+    .hero-content {
+      flex-direction: column;  
+      align-items: center;    
+      gap: 20px;              
+      text-align: center;     
+    }
+
+    //
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-details {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    
+    .hero-image {
+      width: 100%; 
+      .date-box {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  
+  .card-body.centered {
+    padding: 0; 
+  }
+}
