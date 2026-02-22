@@ -1,57 +1,53 @@
-Sistema SIGMA - Gestión Clínica Obstétrica
-📝 Descripción del Proyecto
-SIGMA es una plataforma integral diseñada para la gestión de servicios clínicos, enfocada en el control de acceso basado en roles (RBAC) y la eficiencia operativa. Este repositorio contiene tanto el núcleo del servidor (Backend) como la interfaz de usuario (Frontend).
+# 🏥 Sistema SIGMA - Gestión Clínica Obstétrica
 
-📂 Estructura del Repositorio
-sigma-backend/: API REST desarrollada con Spring Boot y SQL Server.
+![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot%203.x-brightgreen)
+![Angular](https://img.shields.io/badge/Frontend-Angular%2017-red)
+![SQL Server](https://img.shields.io/badge/Database-SQL%20Server-blue)
 
-sigma-frontend/: Aplicación web desarrollada con Angular/React (según tu framework).
+**SIGMA** es una plataforma integral diseñada para la gestión de servicios clínicos, con un enfoque robusto en el control de acceso basado en roles (RBAC) y la optimización de procesos operativos.
 
-🛠️ Tecnologías Utilizadas
-Backend
-Lenguaje: Java 17+
+---
 
-Framework: Spring Boot 3.x
+## 📂 Estructura del Proyecto
 
-Base de Datos: Microsoft SQL Server
+El repositorio se divide en dos módulos principales:
 
-Seguridad: JSON Web Token (JWT)
+| Módulo | Descripción | Tecnología Principal |
+| :--- | :--- | :--- |
+| **`sigma-backend`** | API REST encargada de la lógica de negocio y persistencia. | Java 17 / Spring Boot |
+| **`sigma-frontend`** | Interfaz de usuario interactiva y responsiva. | TypeScript / Angular |
 
-Frontend
-Framework: Angular (o el que estés usando según tu environment.ts)
+---
 
-Estilos: CSS/Bootstrap
+## 🛠️ Tecnologías Utilizadas
 
-🚀 Configuración Rápida
-1. Requisitos Previos
-Java JDK 17 instalado.
+### **Backend**
+* **Lenguaje:** Java 17+
+* **Framework:** Spring Boot 3.x
+* **Persistencia:** Spring Data JPA
+* **Seguridad:** JSON Web Token (JWT) para autenticación sin estado.
 
-Node.js y npm instalados.
+### **Frontend**
+* **Framework:** Angular
+* **Estilos:** CSS3 / Bootstrap 5
+* **Entorno:** `src/environments/environment.ts` para gestión de APIs.
 
-Instancia de SQL Server activa.
+---
 
-2. Base de Datos
-Debes crear una base de datos llamada SIGMA. El sistema está configurado para conectarse en localhost:1433.
+## 🚀 Configuración y Ejecución
 
-Nota: Por seguridad, asegúrate de configurar tus propias credenciales en el archivo application.properties del backend antes de iniciar.
+### **1. Requisitos Previos**
+* ✅ Java JDK 17 o superior.
+* ✅ Node.js (v18+) y npm.
+* ✅ Microsoft SQL Server activo.
 
-3. Ejecución del Proyecto
-Levantar el Backend:
+### **2. Base de Datos**
+El sistema requiere una base de datos llamada `SIGMA`.
+* **Host:** `localhost:1433`
+* **Credenciales:** Configura tu `user` y `password` en el archivo `application.properties`.
 
-Bash
-cd sigma-backend
-./mvnw spring-boot:run
-Levantar el Frontend:
-
-Bash
-cd sigma-frontend
-npm install
-npm start
-🔐 Roles y Autorización
-El sistema implementa un control de acceso basado en roles (RBAC):
-
-Administrador: Acceso total a la configuración y usuarios.
-
-Especialista: Gestión de registros clínicos.
-
-Recepción: Gestión de citas y datos básicos.
+```properties
+# Ejemplo de conexión
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=SIGMA;encrypt=false;
+spring.datasource.username=TU_USUARIO
+spring.datasource.password=TU_CONTRASEÑA
